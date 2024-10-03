@@ -164,10 +164,10 @@ if __name__ == "__main__":
     elif keyword == "decompile":
         if not os.path.isfile("desktop-1.0.jar"):
             error("no desktop-1.0.jar is found")
-        if not os.path.isfile("jd-cli.jar"):
-            warn("no jd-cli.jar is found.")
+        if not os.path.isfile("cfr.jar"):
+            warn("no cfr.jar is found.")
             if ask("download it?"):
-                link = "https://github.com/intoolswetrust/jd-cli/releases/download/jd-cmd-0.9.2.Final/jd-cli-0.9.2-dist.tar.gz"
+                link = "https://www.benf.org/other/cfr/cfr-0.152.jar"
                 log(f"downloading {link.rsplit('/', 1)[1]}...")
                 
                 try: request = requests.get(link, stream=True)
@@ -190,10 +190,7 @@ if __name__ == "__main__":
                         print(" " * (os.get_terminal_size().columns - 1), end="\r")
                         log(f"{dl/length*100:0.0f}%, {conv_bytes(dl)}", end="\r")
                 
-                print(" " * (os.get_terminal_size().columns - 1), end="\r")
-                log("extracting...", end="\r")
-                tarfile.open(None, "r:gz", fileobj=io.BytesIO(data)).extract("jd-cli.jar")
-                
+                open("cfr.jar", "wb").write(data)
                 print(" " * (os.get_terminal_size().columns - 1), end="\r")
                 log("done")
             else:
@@ -203,6 +200,6 @@ if __name__ == "__main__":
         subprocess.run(["7z", "x", "desktop-1.0.jar", "-ojar", "-y"])
         
         log("decompiling jar w/o resources to code/")
-        subprocess.run(["java", "-jar", "jd-cli.jar", "-sr", "-st", "-dc", "desktop-1.0.jar", "-od", "code"])
+        subprocess.run(["java", "-jar", "cfr.jar", "--outputdir", "code", "desktop-1.0.jar"])
     elif keyword == "compile": compile()
     elif keyword == "help": print_help(program_name)
