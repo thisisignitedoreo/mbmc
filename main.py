@@ -61,10 +61,10 @@ def compress_into_jar(folder, file):
 
     os.chdir(out_dir)
 
-def make_mbm(output_file, add_jar=True, add_data=True):
+def make_mbm(output_file, slug, add_jar=True, add_data=True):
     with tarfile.TarFile(output_file, "w") as f:
         f.add("manifest.json")
-        if add_jar: f.add("mod.jar")
+        if add_jar: f.add(slug + ".jar")
         if add_data: f.add("data")
 
 def conv_bytes(b):
@@ -100,7 +100,7 @@ def compile():
         log("no changed files, assuming data-only mod")
     
     log("making final mod file...")
-    make_mbm(F"{manifest['slug']}.mbm", len(files) != 0, len(os.listdir("data")) != 0)
+    make_mbm(F"{manifest['slug']}.mbm", manifest["slug"], len(files) != 0, len(os.listdir("data")) != 0)
     log(f"done! see {manifest['slug']}.mbm")
 
 def print_help(program_name):
