@@ -2,7 +2,7 @@
 Simplify the creation of mods for MBML
 
 ## Requirements
-1. `java` binary (e.g. adoptium jdk)
+1. `java` & `javac` binary, at least java 8 (e.g. adoptium jdk)
 2. Python installed (should work on older versions though latest one is recommended as it is tested on such)
 
 ## Quickstart
