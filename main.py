@@ -82,10 +82,17 @@ def conv_bytes(b):
 def compile():
     if not os.path.isfile("manifest.json"):
         error("cant find manifest. probably not a mod folder.")
+    if not shutil.which("javac"):
+        error("cant find javac. is jdk installed?")
+    if not shutil.which("javac"):
+        error("cant find javac. is jdk installed?")
     
     out = os.path.abspath("out")
     jar = os.path.abspath("jar")
     code = os.path.abspath("code")
+    if not os.path.isdir(out): os.mkdir(out)
+    if not os.path.isdir(jar): os.mkdir(jar)
+    if not os.path.isdir(code): os.mkdir(code)
 
     manifest = json.load(open("manifest.json"))
     
@@ -110,18 +117,6 @@ def print_help(program_name):
     log( "    decompile - decompile and extract jar, second stage of init")
     log( "    compile   - compile into an .mbm mod")
     log( "    help      - show this message")
-
-def print_process(program_name):
-    log( "to create a mod:")
-    log( "1. copy this script to a new folder")
-    log(f"2. run $ {program_name} init, put all details in")
-    log(f"3. copy %MEWNBASE%/game/desktop-1.0.jar to cwd and run $ {program_name} decompile")
-    log( "4. it will download decompiler and decompile the game into code/ folder")
-    log( "5. to actually write a mod:")
-    log( "  1. write all custom code in the code/ directory")
-    log( "  2. add json/translation files that will be replaced in game's data/ folder to data/ folder")
-    log( "  3. add all edited files to changed_files.txt, e.g. com/cairn4/moonbase/Player.java")
-    log(f"6. $ {program_name} compile")
 
 if __name__ == "__main__":
     program_name = sys.argv.pop(0)
