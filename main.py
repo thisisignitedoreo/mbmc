@@ -64,7 +64,7 @@ def compress_into_jar(folder, file):
 def make_mbm(output_file, slug, add_jar=True, add_data=True):
     with tarfile.TarFile(output_file, "w") as f:
         f.add("manifest.json")
-        if add_jar: f.add(slug + ".jar")
+        if add_jar: f.add(slug + ".jar", arcname="mod.jar")
         if add_data: f.add("data")
 
 def conv_bytes(b):
